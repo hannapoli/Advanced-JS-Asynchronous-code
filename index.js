@@ -178,7 +178,7 @@ const fetchGithubUsers = (userNames) => {
 
     const arrayPromesas = userNames.map((name) => fetch(`https://api.github.com/users/${name}`));
 
-    Promise.all(arrayPromesas)
+    return Promise.all(arrayPromesas)
         .then((respuestas) => {
             const promesasJSON = respuestas.map((respuesta) => {
                 if (respuesta.ok) {
@@ -190,16 +190,15 @@ const fetchGithubUsers = (userNames) => {
             return Promise.all(promesasJSON);
         })
         .then((json) => {
-            json.forEach((data => {
-                console.log(data);
-                console.log(data.html_url);
-                console.log(data.name);
-            }))
+            return json.map((data) => ({
+                name: data.name,
+                html_url: data.html_url,
+            }));
         })
         .catch((error) => {
             throw error;
         })
 }
 
-const userNames = ['octocat', 'alenriquez96', 'alejandroereyesb'];
-fetchGithubUsers(userNames);
+// const userNames = ['octocat', 'alenriquez96', 'alejandroereyesb'];
+// fetchGithubUsers(userNames).then(console.log);
