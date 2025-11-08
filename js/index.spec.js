@@ -1,3 +1,4 @@
+//@ts-nocheck
 let randomize = (maxNum = 177, min = 0) => {
     return (Math.floor(Math.random() * maxNum) + min);
 }
